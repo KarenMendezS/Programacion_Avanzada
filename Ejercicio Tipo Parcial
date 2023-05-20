@@ -1,0 +1,80 @@
+/******************************
+Autor: Karen Mendez
+Fecha:13/02/2023
+Problema:
+Se requiere hacer una aplicación que capture los datos 
+de usuarios segun tipo de cliente, el resultado sera el
+valor a pagar segun la cantidad de canales premium a 
+pagar y conexiones de servicios basicos.
+      1.Inicialmente el usuario debera digitar el numero
+      de cuenta.
+      2.Existe dos tipos de cliente: r/R(Residencial) y 
+      n/N (Negocio).
+      3. El valor si es residencial es igual a 20.7 mas
+      8.8 veces la (cantidad_canales_premium)
+      4. El valor si es negocios, vendra definido por:
+        Si la cantidad de conexiones _servicios_basicos
+        es mayor a 10:
+        El valor es igual a el restante de los 10 mas 
+        78.9 mas 18.7
+ ******************************/
+
+
+#include <iostream>
+
+using namespace std;
+
+int main() {
+  //Variables a utilizar
+  int menu_inicial, Ncuenta,conexiones_servicios_basicos,cantidad_canales_premium;
+  char tipo_cliente;
+  float basico_residencial=20.7, precio_canal_premium=8.8,total_canal_premium;
+  do{
+    //Bienvenida al cliente
+    cout<<"||||||||||Bienvenido||||||||||"<<endl;
+  
+    //Se consulta que servicio desea utilizar el cliente
+    cout<<"Que desea realizar?"<<endl;
+    cout<<"1. Consultar cuenta."<<endl;
+    cout<<"0. Salir."<<endl;
+    cin>>menu_inicial;
+  
+    //Menu 
+    switch (menu_inicial){
+      case 1:{
+        //Se pregunta el numero de cuenta del cliente
+        cout<<"Ingresar numero de cuenta: ";
+        cin>>Ncuenta;
+      
+        //Se pregunta el tipo de cliente, r/R(Residencial) y n/N (Negocio).
+        cout<<"Ingresar el tipo de cliente, r/R(Residencial) y n/N (Negocio): ";
+        cin>>tipo_cliente;
+      
+        //Condicional para poder ejecutar las acciones de cada cliente
+        if(tipo_cliente=='n' ||tipo_cliente=='N'){
+          cout<<"T";
+        }else if(tipo_cliente=='r' ||tipo_cliente=='R'){
+          //Se ingresa el numero de canales premium
+          cout<<"Ingrese cuantos canales premium tiene: ";
+          cin>>cantidad_canales_premium;
+          cout<<endl;
+
+          //Se organiza la cuenta presentando los datos a pagar
+          cout<<"°°°°°°°°°°°°°°°°°°°°°°°°°°°"<<endl;
+          cout<<"||||||Cuenta a pagar||||||"<<endl;
+          cout<<"Valor residencial: "<<basico_residencial;
+          cout<<endl;
+        
+          //Se realiza una operacion para saber cuanto valdrian todos los canales premium
+          total_canal_premium=precio_canal_premium*cantidad_canales_premium;
+          cout<<"Valor por "<<cantidad_canales_premium<<" canales premium: "<<total_canal_premium;
+          cout<<endl;
+
+          //Se presenta el total a pagar
+          cout<<"Total a pagar: "<<total_canal_premium+basico_residencial;
+          cout<<endl;
+        }
+      }    
+    }
+  }while(menu_inicial!=0);
+}
