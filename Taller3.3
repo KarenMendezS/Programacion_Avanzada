@@ -1,0 +1,83 @@
+/*
+Nombre:Karen Mendez
+Fecha:31/03/23
+*/
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//Clase madre
+class persona{
+public:
+  //variables
+  string nombre;
+  string apellido;
+
+public:
+  //constructor 
+  persona(string nombre,string apellido){
+    this->nombre=nombre;
+    this->apellido=apellido;
+  }
+  //metodos
+  virtual void presentarse(){
+    cout<<"Hola soy "<<this->nombre<<" "<<this->apellido;
+  }
+};
+
+//Clase hija (profesor)
+class profesor:public persona{
+  //variable
+  string profesor_de;
+public:
+  //constructor 
+  profesor(string profesor_de,string nombre,string apellido):persona( nombre,apellido){
+    this->profesor_de=profesor_de;
+  }
+  //metodo
+  void presentarse(){
+    cout<<"Hola soy "<<this->nombre<<" "<<this->apellido<<" y enseño "<<this->profesor_de;
+  }
+};
+
+//Clase hija(Estudiante)
+class estudiante:public persona{
+  //variables 
+  int grado;
+public:
+  //constructor 
+  estudiante(int grado, string nombre,string apellido):persona( nombre,apellido){
+    this->grado=grado;
+  }
+  //método 
+  void presentarse(){
+    cout<<"Hola soy "<<this->nombre<<" "<<this->apellido<<" y estoy en "<<this->grado<<" grado. ";
+  }
+  // para saber si puede ver programación 
+  bool ver_programacion(){
+    if(this->grado<9){
+      return false;
+    }else{
+      return true;
+    }
+  }
+};
+
+int main(){
+  persona *aux=new persona("Carlos","Diaz");
+  profesor *ingresar=new profesor("literatura","María", "Lopez");
+  estudiante *registrar=new estudiante(9,"Luis","Mora");
+  
+  aux->presentarse();
+  cout<<endl;
+  ingresar->presentarse();
+  cout<<endl;
+  registrar->presentarse();
+  cout<<endl;
+  if(registrar->ver_programacion()==false){
+    cout<<"No pude ver programación.";
+  }else if(registrar->ver_programacion()==true){
+    cout<<"Si pude ver programación.";
+  }
+}
