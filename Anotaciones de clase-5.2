@@ -1,0 +1,35 @@
+class Calculator{
+  public int result;
+  public void add(int num1, int num2){
+    result=num1+num2;
+    System.out.println("The sum of the given numbers:"+result);
+  }
+  public void subtract(int num1, int num2){
+    result=num1-num2;
+    System.out.println("The sum of the given numbers:"+result);
+  }
+  public void multiply(int num1, int num2){
+    result=num1*num2;
+    System.out.println("The difference between of the given numbers:"+result);
+  }
+  //Se crea un metodo que muestra un texto
+  void show(){
+    System.out.println("Metodo show() desde calculator <padre>");
+  }
+}
+
+class MyCalculator extends Calculator{
+  public void divide(int num1, int num2){
+    result=num1/num2;
+    System.out.println("The division of the given numbers:"+result);
+  }
+  public void modulus(int num1, int num2){
+    result=num1%num2;
+    System.out.println("The remainder of the given numbers:"+result);
+  }
+  @Override
+  void show(){
+    super.show();
+    System.out.println("Metodo show() desde calculator <padre>");
+  }
+}
