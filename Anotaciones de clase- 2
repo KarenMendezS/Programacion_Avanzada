@@ -1,0 +1,136 @@
+/****************************
+Autor:Karen mendez
+Fecha:08/02/2022
+
+*****************************/
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+  //Se declaran las variables a utilizar
+  int i,j,k;
+  //Se declaran los vectores a usar
+  vector <int> vector1;
+  vector <int> vector2 {1,2,3,4,5,100};
+
+  //Se asigna un tamaño y se inicializa en un valor
+  vector1.assign(10,304);
+
+  cout<<"Primera version (assign): "<<endl;
+  //Bucle para imprimir la primera version del vector
+  for(i=0;i<vector1.size();i++){
+    cout<<vector1[i]<<" ";
+  }
+  cout<<endl;
+  
+  //Se ingresa el valor 5 al final
+  vector1.push_back(5);
+
+  cout<<"Segunda version (push_back): "<<endl;
+  //Bucle para imprimir la segunda version del vector
+  for(i=0;i<vector1.size();i++){
+    cout<<vector1[i]<<" ";
+  }
+  cout<<endl;
+
+  //Se elemina el ultimo dato
+  vector1.pop_back();
+
+  cout<<"Tercera version (pop_back): "<<endl;
+  //Bucle para imprimir la tercera version del vector
+  for(i=0;i<vector1.size();i++){
+    cout<<vector1[i]<<" ";
+  }
+  cout<<endl;
+  
+  //Se ingresa un elemento al principio
+  vector1.insert(vector1.begin(),1002);
+
+  cout<<"Cuarta version (insert): "<<endl;
+  //Bucle para imprimir la cuarta version del vector
+  for(i=0;i<vector1.size();i++){
+    cout<<vector1[i]<<" ";
+  }
+  cout<<endl;
+
+  //Se eliminan los datos de los vectores
+  vector1.clear();
+
+  cout<<"Quinta version (clear): "<<endl;
+  //Bucle para imprimir la quita version del vector
+  for(i=0;i<vector1.size();i++){
+    cout<<vector1[i]<<" ";
+  }
+  cout<<endl;
+
+  //Separacion de actividades
+  cout<<"______________________________________"<<endl;
+  
+  cout<<"Primera version (&): "<<endl;
+  //Bucle para imprimir la primera version del vector
+  for(const int& i:vector2){
+    cout<<i<<" ";
+  }
+  cout<<endl;
+
+
+  vector2.push_back(25);
+  vector2.push_back(10);
+  
+  cout<<"Segunda version (&): "<<endl;
+  //Bucle para imprimir la segunda version del vector
+  for(const int& i:vector2){
+    cout<<i<<" ";
+  }
+  cout<<endl;
+  
+  //Separacion de actividades
+  cout<<"______________________________________"<<endl;
+
+  //Se declaran los vectores a usar
+  vector <int> vector3(6,201);
+  vector <int> vector4(4,400);
+  
+  //Un puntero de la clase vector
+  vector <int> :: iterator it;
+  //Se clara un array
+  int myarray[] ={501,502,503,304,404};
+
+  cout<<"Primer vector: "<<endl;
+  //Se  imprime los valores del vector3
+  for(it=vector3.begin();it<vector3.end();it++)
+    cout<<" "<<*it;
+    
+  cout<<endl;
+  //Se asigna el iterador al inicio del vector3
+  it=vector3.begin();
+
+  //Se inserta al vector3, tres numeros
+  it=vector3.insert(it,200);
+
+  vector3.insert(it,2,300);
+
+  cout<<"Primer vector (se le insertan 3N°): "<<endl;
+  //Se imprime los valores del vector3
+  for(it=vector3.begin();it<vector3.end();it++)
+    cout<<" "<<*it;
+
+  cout<<endl;
+
+  //it no valido,asignar de nuevo
+  it=vector3.begin();
+
+  vector3.insert(it+2,vector4.begin(),vector4.end());
+  vector3.insert(vector3.begin(),myarray/*al inicio del array*/,myarray+3);
+
+  cout<<"Myvector contains: "<<endl;
+  
+  for(it=vector3.begin();it<vector3.end();it++)
+    cout<<" "<<*it;
+
+  cout<<"\n";
+  
+  return 0;
+}
