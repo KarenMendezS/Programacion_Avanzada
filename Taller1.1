@@ -1,0 +1,38 @@
+/*****************************
+Autor:Karen Mendez
+Fecha:20/02/23
+******************************/
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+//Declaracion de funciones
+void aleatorio(int tamanio,int *array);
+
+int main() {
+  //Declaracion de variables
+  int *array;
+  int tamanio=10;
+
+  aleatorio(tamanio,array);
+  
+  return 0;
+}
+
+void aleatorio(int tamanio,int *array){
+  //Generar vector aleatorio
+  cout<<"Vector aleatorio: "<<endl;
+  //Inicializar el array
+  array=new int [tamanio];
+  //Recorriendo el array y asignando valores aleatorios
+  for(int i=0;i<tamanio;i++){
+    *(array+i)=rand()%25;
+    cout<<array[i]<<" ";
+  }
+  for(int i=0;i<tamanio;i++){
+    cout<<endl;
+    cout<<"Dirreccion "<<i+1<<": ";
+    cout<<&array[i]<<" ";
+  }
+}
