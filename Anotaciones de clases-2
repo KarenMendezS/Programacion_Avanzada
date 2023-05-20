@@ -1,5 +1,4 @@
 import java.util.Arrays;
-
 class OrdenarArreglos {
   public static void imprimirarreglo(String mensaje, int arreglo[]) {
     System.out.println(mensaje+"[longitud: "+arreglo.length+"]");
