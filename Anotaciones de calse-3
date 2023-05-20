@@ -1,0 +1,121 @@
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+//clase con el primer ejercicio
+class Calculo_Pitagoras{
+  //variables a utilizar
+  int opuesto;
+  int adyacente;
+  float hipotenusa;
+
+  public:
+  //Constructor
+  Calculo_Pitagoras(){}
+
+  //Funcion de bienvenida
+  void presentacion(){
+    cout<<"||||||Calculadora de hipotenusa||||||"<<endl;
+  }
+
+  //Se piden los datos al usuario
+  void get(){
+    cout<<"Ingresar cateto opuesto:";
+    cin>>opuesto;
+    cout<<"Ingresar cateto adyacente:";
+    cin>>adyacente;
+  }
+
+  //Se realiza la solucion matematica
+  void set(){
+    hipotenusa=sqrt(pow(opuesto,2)+pow(adyacente,2));
+    cout<<"Su hipotenusa es:"<<hipotenusa;  
+  }
+};
+
+//clase con el segundo ejercicio
+class fecha{
+  //variables a utilizar
+  int dia;
+  int mes;
+  int anio;
+
+  public:
+  //Constructor
+  fecha(){}
+
+  //Funcion de bienvenida
+  void presentacion(){
+    cout<<"||||||Escritura de fecha||||||"<<endl;
+  }
+
+  //Se piden los datos al usuario
+  void get(){
+    cout<<"Ingresar el dia: ";
+    cin>>dia;
+    cout<<"Ingresar el mes: ";
+    cin>>mes;
+    cout<<"Ingresar lel anio: ";
+    cin>>anio;
+  }
+
+  //Se realiza la solucion matematica
+  void set(){
+    cout<<"Fecha: "<<dia<<"/"<<mes<<"/"<<anio;  
+  }
+};
+
+//clase con el tercer ejercicio
+class temperatura{
+  //variables a utilizar
+  int C;
+  float F;
+
+  public:
+  //Constructor
+  temperatura(){}
+
+  //Funcion de bienvenida
+  void presentacion(){
+    cout<<"||||||Calculadora de Centigrados||||||"<<endl;
+    cout<<"||||||||||||||a Farenheit|||||||||||||"<<endl;
+  }
+
+  //Se piden los datos al usuario
+  void get(){
+    cout<<"Ingresar la temperatura en centigrados: ";
+    cin>>C;
+  }
+
+  //Se realiza la solucion matematica
+  void set(){
+    F=(C*1.8)+32;
+    cout<<"Temperatura en Farenheit:"<<F;  
+  }
+};
+
+int main() {
+  int variable;
+  cout<<"||||Multifunciones|||||"<<endl;
+  cout<<"Que desea realizar?"<<endl;
+  cout<<"1.Calcular la hipotenusa."<<endl<<"2.Escribir Fecha."<<endl<<"3.De centigrados a farenhei."<<endl;
+  cin>>variable;
+  switch(variable){
+    case 1:{
+        Calculo_Pitagoras respuesta;
+        respuesta.presentacion();
+        respuesta.get();
+        respuesta.set();
+    }
+    case 2:
+    break;
+    case 3:{
+        temperatura respuesta;
+        respuesta.presentacion();
+        respuesta.get();
+        respuesta.set();
+    }
+  }
+return 0;
+}
