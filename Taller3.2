@@ -1,0 +1,118 @@
+/*
+Nombre:Karen Mendez
+Fecha:31/03/23
+*/
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+//Clase principal
+class triangulo_rectangulo{
+  //variables a utilizar
+  float C_opuesto;
+  float C_adyacente;
+  float hipotenusa;
+
+  public:
+  //constructor
+  triangulo_rectangulo(){}
+
+  //metodos
+  //bienvenida
+  void presentacion(){
+    cout<<endl;
+    cout<<"||||||Triangulo Rectangulo||||||"<<endl;
+    cout<<"Calcular: "<<endl;
+    cout<<"  1.Perimetro."<<endl;
+    cout<<"  2.Hipotenusa."<<endl;
+    cout<<"  3.Altura."<<endl;
+    cout<<"  0.Salir."<<endl;
+  }
+
+  void dibujo(){
+    cout<<"        /|   "<<endl;
+    cout<<"       / |   "<<endl;
+    cout<<"    C /  | A  "<<endl;
+    cout<<"     /   |   "<<endl;
+    cout<<"    /    |   "<<endl;
+    cout<<"   -------   "<<endl;
+    cout<<"      B   "<<endl;
+  }
+
+  //Se piden los datos necesarios al usuario
+  //Para el periemtro
+  void get_perimetro(){
+    cout<<"Ingresar el cateto opuesto(A): "<<endl;
+    cin>>C_opuesto;
+    cout<<"Ingresar el cateto Adyacente(B): "<<endl;
+    cin>>C_adyacente;
+    cout<<"Ingresar la hipotenusa(C): "<<endl;
+    cin>>hipotenusa;
+  }
+  //Para la hipotenusa
+  void get_hipotenusa(){
+    cout<<"Ingresar el cateto opuesto(A): "<<endl;
+    cin>>C_opuesto;
+    cout<<"Ingresar el cateto Adyacente(B): "<<endl;
+    cin>>C_adyacente;
+  }
+  //Para la altura
+  void get_altura(){
+    cout<<"Ingresar el cateto Adyacente(B): "<<endl;
+    cin>>C_adyacente;
+    cout<<"Ingresar la hipotenusa(C): "<<endl;
+    cin>>hipotenusa;
+  }
+
+  //Calculo del perimetro
+  float set_perimetro(){
+    return C_opuesto+C_adyacente+hipotenusa;
+  }
+
+  //Calculo de la hipotenusa
+  float set_hipotenusa(){
+    return sqrt(pow(C_opuesto,2)+pow(C_adyacente,2));
+  }
+
+  //Calculo de la altura
+  float set_altura(){
+    return sqrt(pow(hipotenusa,2)-pow(C_adyacente,2));
+  }
+};
+
+//main
+int main() {
+  //variables a utilizar
+  int auxiliar;
+  triangulo_rectangulo respuesta;
+
+  //Bucle
+  do{
+    //Presentacion
+    respuesta.presentacion();
+    cin>>auxiliar;
+
+    //menu
+    switch (auxiliar){
+      case 1:{
+        respuesta.dibujo();
+        respuesta.get_perimetro();
+        cout<<"Perimetro: "<<respuesta.set_perimetro();
+        break;
+      }
+      case 2:{
+        respuesta.dibujo();
+        respuesta.get_hipotenusa();
+        cout<<"Hipotenusa: "<<respuesta.set_hipotenusa();
+        break;
+      }
+      case 3:{
+        respuesta.dibujo();
+        respuesta.get_altura();
+        cout<<"Altura: "<<respuesta.set_altura();
+        break;
+      } 
+    }
+  }while(auxiliar!=0);  
+}
