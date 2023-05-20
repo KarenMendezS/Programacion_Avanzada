@@ -1,0 +1,92 @@
+/*
+Fecha:08/05/2023
+Autor: Karen Mendez
+Polimorfismo: Metodos del mismo nombre. 
+Adaptar un metodo de la clase padre, a un metodo que realiza algo muy parecido en la clase hijo. 
+*/
+/*class Padre {
+  void show(){
+    System.out.println("Clase Padre:Metodo show");
+  }
+}
+class Hija extends Padre{
+  //Este metodo sobre escribe el metodo show de la clase padre
+  @Override
+  void show(){
+    System.out.println("Clase Hija:Metodo show");
+  }
+}
+//Clase principal
+class Principal{
+  public static void main(String[] args){
+    //se instancia un objeto del tipo padre
+    Padre objeto1=new Padre();
+    objeto1.show();
+    //Se hace una referencia al objeto del tipo Hija
+    Padre objeto2=new Hija();
+    objeto2.show();
+  }
+}/*
+
+/*class Padre{
+  private void m1(){
+    System.out.println("Desde el padre el m1()");
+  }
+  public void m2(){
+    System.out.println("Desde el padre el m2()");
+  }
+  //final void show(){};
+}
+class Hija extends Padre{
+  //Nuevo metodo m1()
+  //unico a la clase hija
+  //los metodos privados y finales no pueden ser sobre escritos
+  private void m1(){
+    System.out.println("Desde Hija m1()");
+  }
+  @Override
+  public void m2(){
+    System.out.println("Desde Hija m2()");
+  }
+  //void show(){};
+}
+class Principal{
+  public static void main(String[] args){
+    Padre obj1=new Padre();
+    obj1.m2();
+    Padre obj2=new Hija();
+    obj2.m2();
+  }
+}*/
+class Padre {
+  void show1(){
+    System.out.println("Clase Padre:Metodo show1");
+  }
+  void show2(){
+    System.out.println("Clase Padre:Metodo show2");
+  }
+}
+class Hija extends Padre{
+  //Este metodo sobre escribe el metodo show de la clase padre
+  @Override
+  void show1() throws ArithmeticException{
+    System.out.println("Clase Hija:Metodo show1");
+  }
+  @Override
+  void show2() throws Exception{
+    System.out.println("Clase Hija:Metodo show2");
+  }
+}
+//Clase principal
+class Principal{
+  public static void main(String[] args){
+    //se instancia un objeto del tipo padre
+    Padre objeto1=new Padre();
+    objeto1.show1();
+    objeto1.show2();
+    //Se hace una referencia al objeto del tipo Hija
+    Padre objeto2=new Hija();
+    objeto2.show1();
+    objeto2.show2();
+  }
+}
