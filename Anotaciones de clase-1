@@ -1,0 +1,130 @@
+/******************************
+Fecha: 30/01/2022   VersionBeta_2
+Autor: Karen Mendez
+Problema:
+	Se tiene un gym que requiere un sistema informatico 
+	para capturar los datos de los clientes.
+	Caracteristicas:
+	-Se crea un struct para hacer el tipo de dato que
+	capture los datos.
+	-Se presente que por cada dato, se imprime la pregunta
+	y se captura
+	Solucion:
+	-Se hara un TDA general para la captura de datos 
+	del usuario.
+	-Se hara un TDA anidado, para la captura de datos de 
+	los hijos.
+	-Se presentara todos los anuncios posibles descriptivos.
+********************************/
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//struct para la captura de los datos de los usuarios
+struct clienteGym
+{
+	string nombre;
+	short edad;
+	int CC;
+	float masa_corporal;
+	char genero;
+	string correo;
+	int N_celular;
+	string dirrecion;
+  int C_hijos;
+//Struct para la captura de los datos de los hijos	
+	struct datos_hijos{
+		string nombre;
+		short edad;
+		int CC;
+	};
+//Arreglo para los hijos(se guardan los datos de los hijos)
+	datos_hijos* registrar_hijos= new datos_hijos[0];
+};
+
+
+int main() {
+	//Variables globales
+	int cantidad_ingresar;
+	
+	//Bienvenida al programa y solicitud de uusuarios a registrar
+	cout<<"    |||||||Bienvenido|||||||"<<endl;
+	cout<<"¡Cuantas usuarios desea registrar?"<<endl;
+	cin>>cantidad_ingresar;
+	
+	//Se crea un arreglos de tipo clienteGym de tamaño cantidad_ingresar
+	clienteGym *registroCliente= new clienteGym[cantidad_ingresar];
+	
+	//Se crea un bucle para capturar todos los datos del usuario
+	for(int i=0;i<cantidad_ingresar;i++){
+		cout<<"Por favor ingrese los datos que se solicitaran a continuación..."<<endl;
+		//Se piden los datos del usuario
+		cout<<"Ingresar nombre: ";
+		cin>>registroCliente[i].nombre;
+		cout<<endl;
+		cout<<"Ingresar edad: ";
+		cin>>registroCliente[i].edad;
+		cout<<endl;	
+		cout<<"Ingresar CC: ";
+		cin>>registroCliente[i].CC;
+		cout<<endl;
+		cout<<"Ingresar masa corporal: ";
+		cin>>registroCliente[i].masa_corporal;
+		cout<<endl;
+		cout<<"Ingresar genero: ";
+		cin>>registroCliente[i].genero;
+		cout<<endl;
+		cout<<"Ingresar numero de celular: ";
+		cin>>registroCliente[i].N_celular;
+		cout<<endl;
+		cout<<"Ingresar correo: ";
+		cin>>registroCliente[i].correo;
+		cout<<endl;
+		cout<<"Ingresar Dirrección: ";
+		cin>>registroCliente[i].dirrecion;
+		cout<<endl;
+		cout<<"Ingresar numero de hijos: ";
+		cin>>registroCliente[i].C_hijos;
+		cout<<endl;
+    registroCliente[i].registrar_hijos= new clienteGym::datos_hijos[registroCliente->C_hijos];
+		cout<<"_______________________________________"<<endl;
+		
+		//Se realiza condicional para saber si se deben ingresar los datos de los hijos
+		if(registroCliente[i].C_hijos>0){
+			int pregunta;
+			//Se pide el consentimiento para ingresar a los hijos
+			cout<<"¿Desea ingresar los datos de sus hijos?"<<endl;
+			cout<<"Responda con si=1 y no=0"<<endl;
+			cin>>pregunta;
+      //Cuando es 0 no se ingresara ningun dato
+			if(pregunta=0){
+				cout<<".";
+      //Cuando es 1 se ingresara ningun datos
+			}else if(pregunta=1){
+          //Se recorre la lista de los hijos
+          for(int j=0;j<registroCliente[i].C_hijos;j++){
+            //Se piden los datos los hijos para su ingreso
+  					cout<<"°°°°°°°°°°°°°°°°°°°°°°°°°"<<endl;
+  					cout<<"Ingresar nombre: ";
+  			   cin>>registroCliente[i].registrar_hijos[j].nombre;
+  					cout<<endl;
+  					cout<<"Ingresar edad: ";
+  					cin>>registroCliente[i].registrar_hijos[j].edad;
+  					cout<<endl;
+  					cout<<"Ingresar CC(o ID): ";
+  					cin>>registroCliente[i].registrar_hijos[j].CC;
+  					cout<<endl;
+  					cout<<"°°°°°°°°°°°°°°°°°°°°°°°°°"<<endl;
+          }
+			}
+		}
+    
+	}
+  cout<<"Se han ingresado a: "<<endl;
+  for(int i=0; i<cantidad_ingresar;i++){
+    cout<<"      "<<i+1<<". "<<registroCliente[i].nombre;
+    cout<<endl;
+  }
+	return 0;
+}
