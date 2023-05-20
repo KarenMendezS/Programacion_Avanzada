@@ -1,0 +1,89 @@
+public class persona {
+  private string nombre;
+  private string apellidos;
+  private int edad;
+
+  public persona(string nombre, string apellidos, int edad){
+    this.nombre=nombre;
+    this.apellidos=apellidos;
+    this.edad=edad;
+  }
+
+  public string getnombre(){
+    return nombre;
+  }
+  public string getapellidos(){
+    return apellidos;
+  }
+  public int getedad(){
+    return edad;
+  }
+}
+public class profesor extends persona{
+  private string idprofesor;
+
+  public profesor(string nombre,string apellidos, int edad){
+    super(nombre,apellidos,edad);
+    idprofesor="unknown";
+  }
+
+  public void setidprofesor(string idprofesor){
+    this.idprofesor=idprofesor;
+  }
+  public string getidprofesor(){
+    return idprofesor;
+  }
+  public string tostring(){
+    return ""+getnombre()+" "+getapellidos()+"-"+getedad()+""+getidprofesor();
+  }
+}
+public class alumno extends persona{
+  private string idalumno;
+
+  public alumno(string nombre,string apellidos, int edad){
+    super(nombre,apellidos,edad);
+    idalumno="unknown";
+  }
+
+  public void setidalumno(string idalumno){
+    this.idalumno=idalumno;
+  }
+  public string getidalumno(){
+    return idalumno;
+  }
+  public string tostring(){
+    return ""+getnombre()+" "+getapellidos()+"-"+getedad()+""+getidalumo();
+  }
+}
+
+public class practicante extends persona{
+  private string idpracticante;
+
+  public practicante(string nombre,string apellidos, int edad){
+    super(nombre,apellidos,edad);
+    idpracticante="unknown";
+  }
+
+  public void setidpracticante(string idpracticante){
+    this.idpracticante=idpracticante;
+  }
+  public string getidpracticante(){
+    return idpracticante;
+  }
+  public string tostring(){
+    return ""+getnombre()+" "+getapellidos()+"-"+getedad()+""+getidpracticante();
+  }
+}
+public class HerenciaPrincipal{
+  public static void main (string []args){
+    profesor profesor1=new profesor("profesor","mendoza cuba",33);
+    System.out.println(profesor1.tostring());
+
+    alumno alumno1=new alumno("alumno","pardo manila",15);
+    alumno1.setidalumno("alumno123456789");
+    System.out.println(alumno1.tostring());
+    practicante practicante1=new practicante("practicante","torres nilo",19);
+    practicante1.setidpracticante("practicante123456789");
+    System.out.println(practicante1.tostring());
+  }
+}
