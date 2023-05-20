@@ -1,0 +1,106 @@
+/*Autor:Karen Mendez
+  Fecha:12/04/2023
+  Tema:Clases
+
+  Ejercicio: Crear una aplicacion que contenga los datos de los empleados.
+      -Nombre
+      -Edad
+      -Salario
+  Con lo anterior,generar una lista de empleados para luego 
+  hacer un reporte ardenado, segun las consultas del usuario.
+  */
+//Importar Librearias
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+//Secrea una clase empleado
+class Empleado{
+  //Atributos privados
+  private String nombre;
+  private int edad;
+  private int salario;
+
+  //Se crear un contructor para reconocer los datos iniciales
+  public Empleado(String nombre, int edad, int salario){
+    this.nombre=nombre;
+    this.edad=edad;
+    this.salario=salario;
+  }
+  //Se necesita capturar el nombre
+  public String getNombre(){
+    return nombre;
+  }
+  //Se necesita capturar el edad
+  public int getEdad(){
+    return edad;
+  }
+  //Se necesita capturar el salario
+  public int getSalario(){
+    return salario;
+  }
+  //Se necesita ingresar el nombre
+  public void setNombre(String nombre){
+    this.nombre=nombre;
+  }
+  //Se necesita ingresar el nombre
+  public void setEdad(int edad){
+    this.edad=edad;
+  }
+  //Se necesita ingresar el nombre
+  public void setSalario(int salario){
+    this.salario=salario;
+  }
+  //Se quieren imprimir los datos contenidos en el objeto
+  public String presentarDatos(){
+    return "["+ getNombre()+", "+ getEdad()+", "+ getSalario()+"]";
+  }
+}
+
+//Se requiere crear una clase para comparar la edad del empleado
+//Ordenar objetos deacuerdo a la edad
+class CompararEdadEmpleado implements Comparator<Empleado>{
+  //Se implementa el metodo que devuelva el orden de acuerdo a la edad
+  public int compare(Empleado emp1, Empleado emp2){
+    return emp1.getEdad()-emp2.getEdad();
+  }
+}
+
+//Se requiere crear una clase para comparar el salario del empleado
+//Ordenar objetos deacuerdo al salario
+class CompararSalarioEmpleado implements Comparator<Empleado>{
+  //Se implementa el metodo que devuelva el orden de acuerdo al ssalrio
+  public int compare(Empleado emp1, Empleado emp2){
+    return emp1.getSalario()-emp2.getSalario();
+  }
+}
+
+//Se hace la clase principal, la cual tendra lista de empleados arrays
+public class Main{
+  public static void main(String[] args){
+    //Se crean unos empleados (arreglo)
+    ArrayList<Empleado> listaEmpleados=new ArrayList<Empleado>();
+    //Se llena la lista con empleados
+    listaEmpleados.add(new Empleado("Jhon",18,10000));
+    listaEmpleados.add(new Empleado("Maria",48,1030));
+    listaEmpleados.add(new Empleado("Juan",58,30400));
+    listaEmpleados.add(new Empleado("Manuel",38,25000));
+    //Se requiere presentar la lista sin ordenar
+    System.out.println("Lista de empleados sin orden");
+    for(Empleado empleado:listaEmpleados){
+      System.out.println(empleado.presentarDatos());
+    }
+    //Se presenta la lista ordenada segun la edad usan Comparator
+    Collections.sort(listaEmpleados, new CompararEdadEmpleado());
+    System.out.println("Lista de empleados ordenados por edad:");
+    for(Empleado empleado:listaEmpleados){
+      System.out.println(empleado.presentarDatos());
+    }
+    //Se presenta la lista ordenada segun el salario usan Comparator
+    Collections.sort(listaEmpleados, new CompararSalarioEmpleado());
+    System.out.println("Lista de empleados ordenados por salario:");
+    for(Empleado empleado:listaEmpleados){
+      System.out.println(empleado.presentarDatos());
+    }
+  }
+}
