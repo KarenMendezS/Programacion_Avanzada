@@ -1,0 +1,60 @@
+/*********************
+  Nombre: Karen Mendez
+  Fecha: 22/02/23
+*********************/
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+//Declarcion del struct
+struct venta{
+  char nombre[30];
+  int N_identificacion;
+  int cantidad;
+  double precio;
+};
+
+int main(){
+  //Declaracion de variables
+  venta *puntero, valor_venta;
+  puntero = &valor_venta;
+//Se abre el archivo especificando que se escribira en el 
+  ofstream fichero("fuente.cpp",ios::app);
+  //Pedir datos al cliente
+  cout<<"Nombre:";
+  cin>>(*puntero).nombre;
+  fichero<<"Nombre: "<<(*puntero).nombre;//Se escribe al archivo
+  fichero<<endl;
+  
+  cout<<"Numero de identificacion: ";
+  cin>>(*puntero).N_identificacion;
+  fichero<<"Numero de identificacion: "<<(*puntero).N_identificacion;
+  fichero<<endl;
+
+  fichero<<"Cantidad de productos \t Precio del producto"<<endl;
+  
+  cout<<"Cantidad de productos:";
+  cin>>(*puntero).cantidad;
+  fichero<<"\t"<<(*puntero).cantidad<<"\t\t\t\t\t\t";
+  
+  cout<<"Precio del producto: ";
+  cin>>(*puntero).precio;
+  fichero<<"\t\t\t\t\t\t"<<(*puntero).precio;
+  fichero<<endl;
+  
+  //Operacion para calcular el precio a pagar
+  int total=(*puntero).cantidad*(*puntero).precio;
+  
+  //Se imprime valor a pagar
+  cout<<"Valor a pagar: "<<total<<endl;
+  fichero<<"Total:\t"<<total;
+  fichero<<endl;
+  
+  fichero<<"___________________________________";
+  fichero<<endl;
+  
+  //Se cierra el archivo
+  fichero.close();
+  
+}
