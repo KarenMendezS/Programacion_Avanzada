@@ -1,0 +1,90 @@
+/*
+Nombre:Karen Mendez
+Fecha:31/03/23
+*/
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+//Clase principal
+class circulo{
+  //variables a utilizar
+  float radio;
+  float perimetro;
+  float diametro;
+  float area;
+
+  public:
+  //constructor
+  circulo(){}
+
+  //metodos
+  //bienvenida
+  void presentacion(){
+    cout<<endl;
+    cout<<"|||||||||Circulo|||||||||"<<endl;
+    cout<<"Calcular: "<<endl;
+    cout<<"  1.Area."<<endl;
+    cout<<"  2.Perimetro."<<endl;
+    cout<<"  3.Diametro."<<endl;
+    cout<<"  0.Salir."<<endl;
+  }
+
+  //Se piden los datos necesarios al usurio
+  void get(){
+    cout<<"Ingresar el radio: "<<endl;
+    cin>>radio;
+  }
+
+  //Calculo del perimetro
+  float set_perimetro(){
+    perimetro=2*M_PI*radio;
+    return perimetro;
+  }
+
+  //Calculo del diametro
+  float set_diametro(){
+    diametro=set_perimetro()/M_PI;
+    return diametro;
+  }
+
+  //Calculo del area
+  float set_area(){
+    area=M_PI*pow(radio,2);
+    return area;
+  }
+};
+
+//main
+int main() {
+  //variables a utilizar
+  int auxiliar;
+  circulo respuesta;
+
+  //Bucle
+  do{
+    //Presentacion
+    respuesta.presentacion();
+    cin>>auxiliar;
+
+    //menu
+    switch (auxiliar){
+      case 1:{
+        respuesta.get();
+        cout<<"Area: "<<respuesta.set_area();
+        break;
+      }
+      case 2:{
+        respuesta.get();
+        cout<<"Perimetro: "<<respuesta.set_perimetro();
+        break;
+      }
+      case 3:{
+        respuesta.get();
+        cout<<"Diametro: "<<respuesta.set_diametro();
+        break;
+      } 
+    }
+  }while(auxiliar!=0);  
+}
