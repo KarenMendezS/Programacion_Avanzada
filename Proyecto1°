@@ -1,0 +1,403 @@
+/***************************
+Autores: Karen Sofia Mendez, Federico Quiroga Garcia
+Fecha:01/03/23
+
+La empresa Minosaurios Tech necesita un programa para registrara sus empleados:
+
+De cada empleado se tiene la siguiente información:
+  - Código numérico
+  - Nombres
+  - Apellidos
+  - Celular
+
+Funciones:
+  -Registrar empleados: Se debe almacenar en un fichero binario "Empleados.bin".
+  -Agregar nuevos empleados: Se verifica que el empleado no este, la información se adiciona al final del fichero.
+  - Mostrar los empleados registrados:Se imprime en pantalla los empleados en orden alfabetico.
+  -Cambiar el numero de movil del empleado:Con el codigo del empleado, si existe, se modifica.
+  -Despedir empleado: con el codigo, si existe, se elimina del binario.Se genera una carta de despedida.txt.
+  -Mostrar empleados que han sido despedido: Se presenta un vector con los empleados despedidos.
+****************************/
+
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector> 
+#include <sys/stat.h>
+#include <algorithm>
+#include <chrono>
+
+using namespace std;
+
+//Struct con datos de los empleados
+struct Empleado{
+  int codigo_num;
+  char nombre[100];
+  char apellidos[100];
+  int celular;
+};
+
+
+//--------------
+//funcion extra3: Pasa todo los empleados registrados en el fichero binario a un vector.
+vector<Empleado>  BinarioAvector()
+{
+  //se crea un Vector de tipo empleado
+  vector<Empleado> VectorEmpleados;
+
+  //Se crea una instancia de ifstream, abrimos "empleados.bin"
+  ifstream file_lectura("Empleados.bin", ios::in | ios::binary);
+
+  //Se mira si se puedo abrir el archivo correctamente
+  if(!file_lectura.is_open())
+  {
+    //Se le avisa al Usuario que no se pudo abrir el archivo
+     cout << "no pudimos abrir el archivo\n";
+  }
+  else
+  { 
+    //Mientras que no se haya terminado el archivo y se haya podido 
+    //recopilar de manera exitosa la lectura sigue en el bucle.
+    while(!file_lectura.eof() && file_lectura.good())
+    {
+        //Se crea un una variable de tipo empleado
+        Empleado empleado;
+        //Se trata de leer un empleado del archivo binario, si fue exitoso guarda la variable "empleado" en el vector de empleados
+        if(file_lectura.read((char*)&empleado,sizeof(Empleado)))
+          VectorEmpleados.push_back(empleado);
+        
+    }
+    
+  }
+  //Retorna el Vector de empleados.
+  return VectorEmpleados;
+}
+
+//Funcion 0: Escribe al fichero Binario el vector de empleados modificado. 
+void VectoraBinario(vector<Empleado>* VectorEmpleados,int size )
+{
+  //Se crea una instancia de ofstream llamada "file_salida"
+  ofstream file_salida;
+
+  //Se reescribe el archivo
+  file_salida.open("Empleados.bin", ios::out|ios::binary);
+  int i =0 ;
+  for(int i = 0; i< size; i++){
+    // se crea una instancia de tipo Empleado
+    Empleado empleado;
+    // en esta instancia se guarda cada empleado que esta en el vector Empleados.
+    empleado = (*VectorEmpleados)[i];
+    //Se escribe lo guardado en esta instancia al archivo binario
+    file_salida.write((char *)(&empleado),sizeof(Empleado));
+  }
+  file_salida.close(); 
+};
+
+//Funcion 1: guarda los datos del nuevo empleado en el archivo binario
+void Registro_empleado(Empleado* empleado,vector<Empleado>* VectorEmpleados)
+{
+  //Se usa la funcion Push_back para añadir un nuevo empleado al Vector epleados.
+  cout << "makra" << endl;
+  VectorEmpleados->push_back(*empleado);
+};
+
+//funcion 2: recoge los datos del nuevo usuario y usa funcion 1 para guardarlos
+void Nuevo_usuario(vector<Empleado>* VectorEmpleados)
+{
+  //Se crea una instancia puntero de tipo empleado da memoria dinamica puesto que se usara en la funcion Registro_empleado, si fuera estatica se borraria esta variable antes de ser usda por la funcion Registro_empleado. Esta instancia guarda la informacion del nuevo empelado.
+   Empleado* empleado = new Empleado();
+
+  cout << "Ingrese el codigo del nuevo empleado: ";
+  cin >> empleado->codigo_num;
+  cout << "Ingrese el nombre del nuevo empleado: ";
+  cin >> empleado->nombre;
+  cout << "Ingrese los apellidos del nuevo empleado: ";
+  cin >> empleado->apellidos;
+  cout << "Ingrese el numero de celular del nuevo empleado: ";
+  cin >> empleado->celular;
+
+  Registro_empleado(empleado,VectorEmpleados);
+}
+
+
+//funcion extra2: compara dos nombres de empleados diferentes, retorna true si a.nombre  es menor que b.nombre.
+bool comparar_por_nombre(const Empleado& a, const Empleado& b)
+{
+  return string(a.nombre) < string(b.nombre);
+}
+
+//Funcion 3: imprime todos los empleados registrados
+int Imprimir_Empleados(vector<Empleado>* VectorEmpleados)
+{
+    // n guarda la cantidad de empleados registrados que hay en el vector empleados
+  int n = (*VectorEmpleados).size();
+    //Se usa la funcion sort para ordenar este vector de manera alfabetica, tiene como argumento  la funcion "compara_por_nombre".
+  sort(VectorEmpleados->begin(),VectorEmpleados->end(),comparar_por_nombre);
+  
+  for(int i = 0 ; i<n;i++ )
+    {
+      cout << "Empleado #" << i+1 << endl;
+      cout << "  Nombre: " << (*VectorEmpleados)[i].nombre << endl;
+      cout << "  Apellidos: "<< (*VectorEmpleados)[i].apellidos << endl;
+      cout << "  Codigo: "<< (*VectorEmpleados)[i].codigo_num << endl;
+      cout << "  Celular: "<< (*VectorEmpleados)[i].celular << endl<<endl;
+    }
+
+  return 2;
+}
+
+//funcion 4: cambia el numero de un empleadoo 
+void cambiarNumero(vector<Empleado>* VectorEmpleados)
+{
+  //declaracion de variables
+  bool existe = false;
+  int codigo;
+  int size = (*VectorEmpleados).size();
+
+  //------------------------
+  //Se le pide el codigo de empleado a cambiar al usuario, se recorre el vector empleados, si encuentra el codigo se le pide al usuario el nuevo numero de celular, de lo contrario se le dira al usuario que no se encontro el empleado.
+  cout << "Digite codigo de empleado a cambiar:" << endl;
+  cin >> codigo;
+  
+  for(int i = 0; i < size; i++)
+  {
+   if((*VectorEmpleados)[i].codigo_num == codigo)
+    {
+      int num;
+      cout << "digite el nuevo nuevo de telefono:" << endl;
+      cin >> num;
+      (*VectorEmpleados)[i].celular = num;
+      existe = true;
+    }
+  }
+  if(existe == false)
+  {
+    cout << "Empleado no existe" << endl;
+  }
+}
+
+//Funcion 5: Pide el codigo del empleado a eliminar, lo borra del vector
+void EliminarUsuario(vector<Empleado>* VectorEmpleado,vector<Empleado>* VectorEliminados)
+{
+  //Declaracion de variables
+  int size = (*VectorEmpleado).size();
+  int codigo;
+  Empleado empleadoEliminado;
+  bool exist = false;
+  //---------------------------------
+  //Se le pide al usuario el emplado a elminar, se recorre todo el vector de empleados y si se encuentra el empleado se usa la funcion erase() para elminar este empleado del vector. Si no encontro el empleado se avisa al usuario. 
+  cout << "Digite el codigo del empleado a eliminar" << endl;
+  cin>> codigo;
+
+  for(int i = 0 ; i< size; i++)
+    {
+      if((*VectorEmpleado)[i].codigo_num == codigo)
+      {
+        empleadoEliminado = (*VectorEmpleado)[i];
+        //Se guarda el empleado eliminado en el vectorEliminados
+        VectorEliminados->push_back(empleadoEliminado);
+        (*VectorEmpleado).erase((*VectorEmpleado).begin() + i);
+        exist = true;
+      }
+    }
+  //Se realiza un condicional para determinar si el empleado encuentra registrado
+  if(exist == false)
+  {
+    cout << "No se encontro el empleado" << endl;
+  }
+  else
+  {   
+  //Se obtiene la Fecha y Hora actual
+  auto now =chrono::system_clock::now();
+  time_t end_time=chrono::system_clock::to_time_t(now);
+
+  //Variables para abrir y usar en el archivo .txt
+  string nombre = empleadoEliminado.nombre;
+  string NombreArchivo = "Carta_Despedido_" + nombre+".txt";
+    
+  //Abrir el archivo .txt
+  ofstream fileDespedido(NombreArchivo,ios::out);
+  if(!fileDespedido.is_open())
+  cout << "no se pudo crear el archivo";
+  else
+  {
+    //Escritura de la carta de despido
+    fileDespedido<< "                " <<ctime(&end_time) <<endl;
+    fileDespedido<<"Bogota DC."<<endl;
+    fileDespedido<<endl;
+    fileDespedido<<"Por medio del presente docuemento, la empresa Minosaurios Tech le informa al,"<<endl;
+    fileDespedido<<endl;
+    fileDespedido<<"Señor(a) "<< empleadoEliminado.nombre << " " << empleadoEliminado.apellidos;
+    fileDespedido << ", identificado con el código " <<  empleadoEliminado.codigo_num;
+    fileDespedido<<". Que sus servicicos seran prescindidos de la empresa."<<endl;
+    fileDespedido<<endl;
+    fileDespedido<<"Agradecemos su compromiso con la empresa."<<endl;      
+  } 
+    //Se informa que la carta si fue generada
+      cout<<endl;
+      cout<<"________________________________________"<<endl;
+      cout<<"La carta fue generada de forma correcta."<<endl;
+  }
+}
+
+//-------------------
+//funcion extra0: pasa los empleados eliminados guardados en el archivo binario "EmpleadosEliminados.bin" a un vector.
+vector<Empleado> EliminadosAvector()
+{
+  vector<Empleado> EmpleadosEliminados;
+  
+  ifstream FileEliminados("EmpleadosEliminados.bin", ios::in | ios::binary);
+  if(!FileEliminados.is_open())
+  {
+    cout << "No se pudo leer el archivo" << endl;
+    return EmpleadosEliminados;
+  } 
+  else
+  {
+    while(!FileEliminados.eof() && FileEliminados.good())
+      {
+        Empleado empleadoEliminado;
+        if(FileEliminados.read((char*)&empleadoEliminado,sizeof(Empleado)))
+          EmpleadosEliminados.push_back(empleadoEliminado);
+      }
+    return EmpleadosEliminados;
+  }
+}
+
+//funcion extra1: Pasa el vector que tiene todos los empleados eliminados de nuevo al archivo binario "EmpleadosEliminados.bin"
+void vectorEliminado_a_binario(vector<Empleado>* VectorEliminados)
+{
+  //Se reescribe al archivo
+  ofstream FileEliminados("EmpleadosEliminados.bin", ios::out | ios::binary);
+  
+  if(!FileEliminados.is_open())
+    cout << "No se pudo abrir el fichero EmpleadosEliminados.bin" << endl;
+  else{
+    //Se crea una instancia de tipo Empleado
+    Empleado empleado;
+    
+    for(int i =0; i<(*VectorEliminados).size();i++)
+      {
+        //En esta instancia se guarda cada empleado que esta en el vector Empleado.
+        empleado = (*VectorEliminados)[i];
+        //Se escribe lo guardado en esta instancia al archivo binario
+        FileEliminados.write((char*)&empleado,sizeof(Empleado));
+      }
+    }
+}
+    //-------------------
+//funcion extra0: pasa los empleados eliminados guardados en el archivo binario "EmpleadosEliminados.bin" a un vector.
+vector<Empleado> EliminadosAvector()
+{
+  vector<Empleado> EmpleadosEliminados;
+  
+  ifstream FileEliminados("EmpleadosEliminados.bin", ios::in | ios::binary);
+  if(!FileEliminados.is_open())
+  {
+    cout << "No se pudo leer el archivo" << endl;
+    return EmpleadosEliminados;
+  } 
+  else
+  {
+    while(!FileEliminados.eof() && FileEliminados.good())
+      {
+        Empleado empleadoEliminado;
+        if(FileEliminados.read((char*)&empleadoEliminado,sizeof(Empleado)))
+          EmpleadosEliminados.push_back(empleadoEliminado);
+      }
+    return EmpleadosEliminados;
+  }
+}
+  
+
+//funcion extra1: Pasa el vector que tiene todos los empleados eliminados de nuevo al archivo binario "EmpleadosEliminados.bin"
+void vectorEliminado_a_binario(vector<Empleado>* VectorEliminados)
+{
+  //Se reescribe al archivo
+  ofstream FileEliminados("EmpleadosEliminados.bin", ios::out | ios::binary);
+  
+  if(!FileEliminados.is_open())
+    cout << "No se pudo abrir el fichero EmpleadosEliminados.bin" << endl;
+  else{
+    //Se crea una instancia de tipo Empleado
+    Empleado empleado;
+    
+    for(int i =0; i<(*VectorEliminados).size();i++)
+      {
+        //En esta instancia se guarda cada empleado que esta en el vector Empleado.
+        empleado = (*VectorEliminados)[i];
+        //Se escribe lo guardado en esta instancia al archivo binario
+        FileEliminados.write((char*)&empleado,sizeof(Empleado));
+      }
+  }
+}
+  }
+
+
+//Funcion 6: Imprime los empleados eliminados
+void empledosDespedidos(vector<Empleado>* VectorEliminados){
+
+  //Se llama a la funcion Imprimir_Empleados para que imprima lo que se encuentra en VectorEliminados
+  if((*VectorEliminados).size() == 0)
+    cout<<"No hay empleados Despedidos" << endl;
+  else
+    Imprimir_Empleados(VectorEliminados);  
+}
+
+//Funcion donde se encuentra el menu
+void menu_principal(){
+  
+  //Variables a utilizar
+  int opciones_Menu;
+  // se guarda en este vector los empleados existentes en el binario
+  vector<Empleado> VectorEmpleados = BinarioAvector();
+  // se guarda en este vector los empleados eliminados existentes en el binario eliminados 
+  vector<Empleado> VectorEliminados = EliminadosAvector();
+
+  //Bienvenida al usuario, se les muestra las opciones de las que dispone
+  cout << "||||||||Bienvenidos||||||||" << endl;
+  
+  //do while para mantenerse en el menu hasta que el usuario lo desee
+  do{
+    cout<<  endl;
+    cout<< "Que opcion desea utlizar:" << endl; 
+    cout<<  endl;
+    cout<< "1.Agregar nuevos empleados." << endl;
+    cout<< "2.Mostrar empleados registrados." << endl;
+    cout<< "3.Cambiar el numero de un empleado." << endl;
+    cout<< "4.Despedir empleado." << endl;
+    cout<< "5.Mostrar empleados despedidos." << endl;
+    cout<< "0.Salir."<<endl;
+
+    cin>>opciones_Menu;
+    cout << endl;
+    //Switch para opciones del menu
+    switch (opciones_Menu){
+      case 1:
+        Nuevo_usuario(&VectorEmpleados);
+      break;
+      case 2:
+        Imprimir_Empleados(&VectorEmpleados);
+      break;
+      case 3:
+        cambiarNumero(&VectorEmpleados);
+      break;
+      case 4:
+        EliminarUsuario(&VectorEmpleados, &VectorEliminados);
+      break;
+      case 5:
+        empledosDespedidos(&VectorEliminados);
+      break;
+    }
+  }while(opciones_Menu!=0);
+
+  // se guarda la informacion de los vectores a sus respectivos archivos binarios
+  VectoraBinario(&VectorEmpleados, VectorEmpleados.size());
+  vectorEliminado_a_binario(&VectorEliminados);
+}
+
+//Funcion principal
+int main() {
+  menu_principal();
+  return 0;
+ }
