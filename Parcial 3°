@@ -1,0 +1,165 @@
+/*
+Nombre: Karen Mendez
+Fecha:21/05/2023
+Conceptos:
+  1. a      6. a
+  2. a      7. d
+  3. b      8. d
+  4. a      9. a
+  5. b      10. d
+Proposito:
+Se considera una aplicación de análisis de datos que procesa diferentes 
+tipos de conjuntos de datos.
+*/
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+class Main {
+  public static void main(String[] args){
+    //Uso del metodo sobre escrito describir() en la clase ConjuntoDeDatosTabular
+    String N="Datos de estudiantes";
+    int T=1300;
+    int C=500; 
+    int F=900;
+    ConjuntoDeDatosTabular aux1=new ConjuntoDeDatosTabular(N,T,C,F);
+    System.out.println(aux1.describir());
+    //Uso del metodo sobre escrito describir() en la clase ConjuntoDeDatosImagen
+    N="Imagenes Radiografia";
+    T=1500;
+    int AN=1080; 
+    int AL=1000;
+    ConjuntoDeDatosImagen aux2=new ConjuntoDeDatosImagen(N,T,AN,AL);
+    System.out.println(aux2.describir());
+  }
+}
+
+//Clase padre
+abstract class ConjuntoDeDatos{
+  //Atributos
+  String nombre;
+  int tamanio;
+
+  //constructor que inicializa los atributos
+  public ConjuntoDeDatos( String nombre,int tamanio){
+    this.nombre=nombre;
+    this.tamanio=tamanio;  
+  }
+  //Setters
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+  public void setTamanio(int tamanio) {
+    this.tamanio = tamanio;
+  }
+  //Getters
+  public String getNombre(){
+    return nombre;
+  }
+  public int getTamanio(){
+    return tamanio;
+  }
+  //metodo abstracto
+  public abstract String describir();
+}
+
+//Clase hija
+//Conjuto de datos tabular
+class ConjuntoDeDatosTabular extends ConjuntoDeDatos{
+  //Atributos
+  int numeroDeColumnas;
+  int numeroDeFilas;
+
+  //constructor que inicializa los atributos
+  public ConjuntoDeDatosTabular( String nombre,int tamanio, int numeroDeColumnas, int numeroDeFilas){
+    super(nombre, tamanio);
+    this.numeroDeColumnas=numeroDeColumnas;
+    this.numeroDeFilas=numeroDeFilas;
+  }
+  //setters
+  public void setNumeroDeColumnas(int numeroDeColumnas) {
+    this.numeroDeColumnas = numeroDeColumnas;
+  }
+  public void setNumeroDeFilas(int numeroDeFilas) {
+    this.numeroDeFilas = numeroDeFilas;
+  }
+  //getters
+  public int getNumeroDeColumnas() {
+    return numeroDeColumnas;
+  }
+  public int getNumeroDeFilas() {
+    return numeroDeFilas;
+  }
+  //Se sobre escribe el metodo describir() de la clase padre
+  @Override
+  public String describir(){
+    //Se le ingresa al String el formato y lo que deseamos que retorne
+    String datosT="Nombre:"+ getNombre()+ "\nTamanio:"+ getTamanio()+"\nTipo: Tabular \nFilas:"+ getNumeroDeFilas()+"\nColumnas:"+ getNumeroDeColumnas();
+    return datosT;
+  }
+}
+
+//Clase hija
+//Conjuto de datos de imagen
+class ConjuntoDeDatosImagen extends ConjuntoDeDatos{
+  //Atributos
+  int ancho;
+  int alto;
+  //constructor que inicializa los atributos
+  public ConjuntoDeDatosImagen( String nombre,int tamanio, int ancho, int alto){
+    super(nombre, tamanio);
+    this.ancho=ancho;
+    this.alto=alto;
+  }
+  //setters
+  public void setAncho(int ancho) {
+    this.ancho = ancho;
+  }
+  public void setAlto(int alto) {
+    this.alto = alto;
+  }
+  //getters
+  public int getAncho() {
+    return ancho;
+  }
+  public int getAlto() {
+    return alto;
+  }
+  //Se sobre escribe el metodo describir() de la clase padre
+  @Override
+  public String describir(){
+    //Se le ingresa al String el formato y lo que deseamos que retorne
+    String datosI="Nombre:"+ getNombre()+ "\nTamanio:"+ getTamanio()+"\nTipo: Imagen \nAncho:"+ getAncho()+ "\nAlto:"+ getAlto();
+    return datosI;
+  }
+}
+
+//Clase que realiza(tiene) acciones del manejo de ConjuntoDeDatos 
+class AnalizadorDeDatos{
+  //Atributos
+  static ArrayList<ConjuntoDeDatos> conjuntoDeDatos = new ArrayList <>();
+
+  //Metodo que añade un conjunto de datos
+  public void anadirConjuntoDeDatos(ConjuntoDeDatos conjuntoDeDatosA){
+    conjuntoDeDatos.add(conjuntoDeDatosA);
+  }
+
+  //Metodo que elimina un conjunto de datos
+  public void eliminarConjuntoDeDatos(String nombre){
+    //Bucle para recorrer la lista
+    for(ConjuntoDeDatos i : conjuntoDeDatos){
+      //Si encuentra el nombre en la lista lo va a eliminar
+      if (i.getNombre().equals(nombre)){
+          conjuntoDeDatos.remove(nombre);
+      }
+    }
+  }
+
+  public  ArrayList<String> describirConjuntosDeDatos(){
+    ArrayList<String> describir= new ArrayList<>();
+    for(ConjuntoDeDatos i: conjuntoDeDatos){
+      describir.add(i.describir());
+    }
+    return describir;
+  }
+}
