@@ -1,0 +1,192 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Main {
+  public static void main(String[] args) {
+    Control auxiliar=new Control();
+    Scanner scanner = new Scanner(System.in);
+    int answer;
+    //Menu principal
+    do{
+    System.out.println("\n |||||||||||MENU|||||||||||");
+    System.out.println("\n\t1. Agregar Producto");
+    System.out.println("\n\t2. Lista de productos");
+    System.out.println("\n\t0. Salir");
+      
+    answer = scanner.nextInt();
+    switch(answer){
+      case 1:{
+        auxiliar.Seleccionar();
+        break;
+      }
+      case 2:{
+      auxiliar.ListarProductos();
+        break;
+      }
+    }
+    }while(answer!=0);
+  }
+}
+
+//Clase Padre
+abstract class ProductoElectronico{
+  //Atributos
+  String nombre;
+  int precio;
+  String garantia;
+
+  //Getters
+  public String getNombre(){
+    return nombre;
+  }
+  public int getPrecio(){
+    return precio;
+  }
+  public String getGarantia(){
+    return garantia;
+  }
+
+  //metodos
+  public abstract void cargar(int cargaInicial);
+
+  public void describirProducto(ProductoElectronico nuevo){
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Ingresar Nombre: ");
+    this.nombre=scanner.next();
+    System.out.println("Ingresar Precio: ");
+    this.precio=scanner.nextInt();
+    System.out.println("Ingresar Garantia: ");
+    this.garantia=scanner.next();
+  }
+}
+
+//Clase hija
+class Celular extends ProductoElectronico{
+  //Atributos
+  int camara;//resolucion de la camara
+  int audio;
+  int bateria;
+
+  //getters
+  public int getCamara(){
+    return camara;
+  }
+  public int getAudio(){
+    return audio;
+  }
+  public int getBateria(){
+    return bateria;
+  }
+
+  //Se sobre escribe el metodo cargar() de la clase padre
+  @Override
+  public void cargar(int cargaInicial){
+    int tiempoCarga=140;
+    int cargar=(cargaInicial*tiempoCarga)/100;
+    System.out.println("El celular tardara en cargar "+cargar+"minutos.");
+  }
+  //Se sobre escribe el metodo describirProducto() de la clase padre
+  //Se ingresan los datos
+  public void describirProducto(Celular nuevo){
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Ingresar Nombre: ");
+    this.nombre=scanner.next();
+    System.out.println("Ingresar Precio: ");
+    this.precio=scanner.nextInt();
+    System.out.println("Ingresar Garantia: ");
+    this.garantia=scanner.next();
+    System.out.println("Ingresar Camara: ");
+    this.camara=scanner.nextInt();
+    System.out.println("Ingresar Audio: ");
+    this.audio=scanner.nextInt();
+    System.out.println("Ingresar Bateria: ");
+    this.bateria=scanner.nextInt();
+  }
+}
+
+//Clase hija
+class Computadora extends ProductoElectronico{
+  //Atributos
+  String procesador;
+  int USB;
+
+  //getters
+  public String getProcesador(){
+    return procesador;
+  }
+  public int getUSB(){
+    return USB;
+  }
+
+  //Se sobre escribe el metodo cargar() de la clase padre
+  @Override
+  public void cargar(int cargaInicial){
+    int tiempoCarga=100;
+    int cargar=(cargaInicial*tiempoCarga)/100;
+    System.out.println("El Computador tardara en cargar "+cargar+"minutos.");
+  }
+  //Se sobre escribe el metodo describirProducto() de la clase padre
+  //Se ingresan los datos
+  public void describirProducto (Computadora nuevo){
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Ingresar Nombre: ");
+    this.nombre=scanner.next();
+    System.out.println("Ingresar Precio: ");
+    this.precio=scanner.nextInt();
+    System.out.println("Ingresar Garantia: ");
+    this.garantia=scanner.next();
+    System.out.println("Ingresar Procesador: ");
+    this.procesador=scanner.next();
+    System.out.println("Ingresar # de entradas usb: ");
+    this.USB=scanner.nextInt();
+  }
+}
+
+//Programa principal
+class Control{
+  //Lista
+  static ArrayList<ProductoElectronico> productoElectronico = new ArrayList <>();
+
+ //agrega a la lista
+  public void Agregar(ProductoElectronico nuevoProducto){
+      productoElectronico.add(nuevoProducto);
+  }
+
+  //Imprimir lista
+  public void ListarProductos(){
+      for(ProductoElectronico i: productoElectronico){
+        System.out.println("Nombre:"+i.getNombre() +"\nPrecio:"+ i.getPrecio()+ "\nGarantia:"+i.getGarantia());
+      }
+  }
+
+  //Menu de seleccion de producto
+  public void Seleccionar(){
+    Scanner scanner = new Scanner(System.in);
+    int answer;
+    //Menu principal
+    do{
+    System.out.println("\n\t1. Agregar Celular");
+    System.out.println("\n\t2. Agregar Computador");
+    System.out.println("\n\t0. Salir");
+  
+    answer = scanner.nextInt();
+    switch(answer){
+      case 1:{
+        Celular ingresar=new Celular();
+        Celular nuevo=new Celular();
+        ingresar.describirProducto(nuevo);
+        Agregar(ingresar);
+        break;
+      }
+      case 2:{
+        Computadora ingresar=new Computadora();
+        Computadora nuevo=new Computadora();
+        ingresar.describirProducto(nuevo);
+        Agregar(ingresar);
+        break;
+      }
+    }
+    }while(answer!=0);
+  }
+    
+}
